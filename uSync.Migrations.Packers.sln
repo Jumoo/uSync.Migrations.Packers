@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uSync.Migration.Pack.Seven", "uSync.Migration.Pack.Seven\uSync.Migration.Pack.Seven.csproj", "{327833B5-796A-403A-BD92-B1394CA7CE9B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoSeven", "UmbracoSeven\UmbracoSeven.csproj", "{7A63C456-54FA-48B9-842A-DB0BF3990770}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{327833B5-796A-403A-BD92-B1394CA7CE9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{327833B5-796A-403A-BD92-B1394CA7CE9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{327833B5-796A-403A-BD92-B1394CA7CE9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{327833B5-796A-403A-BD92-B1394CA7CE9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A63C456-54FA-48B9-842A-DB0BF3990770}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A63C456-54FA-48B9-842A-DB0BF3990770}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A63C456-54FA-48B9-842A-DB0BF3990770}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A63C456-54FA-48B9-842A-DB0BF3990770}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A90D0251-2A8C-4B8E-B1F0-874792EA0C8E}
+	EndGlobalSection
+EndGlobal
