@@ -79,7 +79,7 @@ namespace uSync.Migration.Pack.Seven.Services
 
             var configJson = JsonConvert.SerializeObject(gridConfig, Formatting.Indented);
 
-            var configFile = Path.Combine(folder, siteFolder, "grid.editors.config.js");
+            var configFile = Path.Combine(folder, siteFolder, "config", "grid.editors.config.js");
 
             Directory.CreateDirectory(Path.GetDirectoryName(configFile));   
               
