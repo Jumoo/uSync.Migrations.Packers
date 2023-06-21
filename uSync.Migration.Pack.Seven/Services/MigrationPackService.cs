@@ -77,7 +77,7 @@ namespace uSync.Migration.Pack.Seven.Services
                 debugging);
 
 
-            var configJson = JsonConvert.SerializeObject(gridConfig, Formatting.Indented);
+            var configJson = JsonConvert.SerializeObject(gridConfig.EditorsConfig.Editors, Formatting.Indented);
 
             var configFile = Path.Combine(folder, siteFolder, "config", "grid.editors.config.js");
 
