@@ -1,9 +1,9 @@
 /// <binding ProjectOpened='default' />
 const { watch, src, dest } = require('gulp');
 
-const sources = ['uSync.Migration.Pack.Seven/App_Plugins'];
+const sources = ['uSync.Migrations.Packer/App_Plugins'];
 
-const destination = 'UmbracoSeven/App_Plugins/';
+const destination = 'UmbracoEight.Site/App_Plugins/';
 
 function copy(path, base) {
     return src(path, { base: base })
