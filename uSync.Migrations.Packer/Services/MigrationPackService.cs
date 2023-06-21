@@ -68,7 +68,7 @@ namespace uSync.Migrations.Packer.Services
 
         private void GetGridConfig(string folder)
         {
-            var configJson = JsonConvert.SerializeObject(_gridConfig, Formatting.Indented);
+            var configJson = JsonConvert.SerializeObject(_gridConfig.EditorsConfig.Editors, Formatting.Indented);
             var configFolder = Path.Combine(folder, siteFolder, "config");
 
             Directory.CreateDirectory(configFolder);
