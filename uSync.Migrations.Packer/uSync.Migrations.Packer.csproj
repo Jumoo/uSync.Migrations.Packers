@@ -1,8 +1,24 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net472</TargetFramework>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>uSync.Migration.Packer</PackageId>
+
+		<Title>uSync Migration Package (v8)</Title>
+		<Authors>Kevin Jump</Authors>
+		<Company>Jumoo</Company>
+
+		<Description>
+			<![CDATA[A Package to create a zip file for eaiser migrations with uSync.Migrations]]></Description>
+
+		<PackageProjectUrl>https://github.com/Jumoo/uSync.Migrations.Packers</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/Jumoo/uSync.Migrations.Packers</RepositoryUrl>
+
+		<PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
+	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="UmbracoCms.Web" Version="8.18.8" />
@@ -10,7 +26,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Reference Include="System.IO.Compression" />
+		<Content Include="App_Plugins\uSyncPacker\**\*.*">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
+		</Content>
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<Reference Include="System.IO.Compression" />
 	</ItemGroup>
 
 </Project>
