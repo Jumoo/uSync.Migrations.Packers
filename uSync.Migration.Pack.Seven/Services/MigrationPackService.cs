@@ -25,7 +25,7 @@ namespace uSync.Migration.Pack.Seven.Services
             _root = IOHelper.MapPath("~/uSync/MigrationPacks");
         }
 
-        public MemoryStream PackExport()
+        public FileStream PackExport()
         {
             var id = Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
             var folder = GetExportFolder(id);
@@ -52,7 +52,6 @@ namespace uSync.Migration.Pack.Seven.Services
             CleanFolder(folder);
 
             return stream;
-          
         }
 
         /// <summary>
@@ -125,8 +124,9 @@ namespace uSync.Migration.Pack.Seven.Services
         /// <summary>
         ///  zip the folder up into return a stream 
         /// </summary>
-        private MemoryStream ZipFolder(string folder)
+        private FileStream ZipFolder(string folder)
         {
+            var filename = $"migration_data_{DateTime.Now.ToString("yyyy_MM_dd_HHmmss")}.zip";
             var folderInfo = new DirectoryInfo(folder);
             var files = folderInfo.GetFiles("*.*", SearchOption.AllDirectories).ToList();
 
@@ -141,7 +141,10 @@ namespace uSync.Migration.Pack.Seven.Services
             }
 
             stream.Seek(0, SeekOrigin.Begin);
-            return stream;
+            var fs = new FileStream(Path.Combine(_root, filename), FileMode.Create);
+            stream.WriteTo(fs);
+
+            return fs;
         }
 
         private void CleanFolder(string folder)
@@ -156,7 +159,11 @@ namespace uSync.Migration.Pack.Seven.Services
             }
         }
 
-        private string GetExportFolder(string id)
-            => Path.Combine(_root, id);
+        /// <summary>
+        /// Get the folder path for the export
+        /// </summary>
+        /// <param name="id">The unique id for the folder</param>
+        /// <returns>The full path to the folder to export to</returns>
+        private string GetExportFolder(string id) => Path.Combine(_root, id);
     }
 }
