@@ -25,12 +25,34 @@ namespace uSync.Migration.Pack.Seven.Services
             _root = IOHelper.MapPath("~/uSync/MigrationPacks");
         }
 
-        public Guid CreateExport()
+        public MemoryStream PackExport()
         {
-            var id = Guid.NewGuid();
-            var folder = Path.Combine(GetExportFolder(id), uSyncFolder);
-            CreateExport(folder);
-            return id;
+            var id = Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
+            var folder = GetExportFolder(id);
+
+            // grab the things we want to include in the pack 
+
+            // a full uSync export
+            CreateExport(Path.Combine(folder, uSyncFolder));
+
+            // the grid.config for the site
+            GetGridConfig(folder);
+
+            // views
+            CopyViews(folder);
+
+            // css and scripts
+            CopyCss(folder);
+            CopyScripts(folder);
+
+            // make the stream
+            var stream = ZipFolder(folder);
+
+            // clean the folder we used
+            CleanFolder(folder);
+
+            return stream;
+          
         }
 
         public void GetConfig(Guid id)
@@ -119,8 +141,9 @@ namespace uSync.Migration.Pack.Seven.Services
         /// <summary>
         ///  zip the folder up into return a stream 
         /// </summary>
-        private MemoryStream ZipFolder(string folder)
+        private FileStream ZipFolder(string folder)
         {
+            var filename = $"migration_data_{DateTime.Now.ToString("yyyy_MM_dd_HHmmss")}.zip";
             var folderInfo = new DirectoryInfo(folder);
             var files = folderInfo.GetFiles("*.*", SearchOption.AllDirectories).ToList();
 
@@ -135,7 +158,10 @@ namespace uSync.Migration.Pack.Seven.Services
             }
 
             stream.Seek(0, SeekOrigin.Begin);
-            return stream;
+            var fs = new FileStream(Path.Combine(_root, filename), FileMode.Create);
+            stream.WriteTo(fs);
+
+            return fs;
         }
 
         private void CleanFolder(string folder)
@@ -150,7 +176,7 @@ namespace uSync.Migration.Pack.Seven.Services
             }
         }
 
-        private string GetExportFolder(Guid id)
-            => Path.Combine(_root, id.ToString());
+        private string GetExportFolder(string id)
+            => Path.Combine(_root, id);
     }
 }

@@ -42,39 +42,34 @@ namespace uSync.Migration.Pack.Seven.Controllers
         [HttpPost]
         public HttpResponseMessage ZipFolder(Guid id)
         {
-
-            var filename = string.Format("migration_data_{0}.zip", DateTime.Now.ToString("yyyy_MM_dd_HHmmss"));
-            // var filename = Path.GetFileNameWithoutExtension(Path.GetRandomFileName()) + ".zip";
-
             var migrationPackService = new MigrationPackService();
             using (var stream = migrationPackService.ZipExport(id))
             {
-                if (stream != null)
+                // If there is no stream we can exit early, something went wrong :(
+                if (stream == null) return new HttpResponseMessage(System.Net.HttpStatusCode.NotFound);
+                
+                System.IO.BinaryReader binaryReader = new System.IO.BinaryReader(stream);
+                long byteLength = new System.IO.FileInfo(stream.Name).Length;
+                var filename = Path.GetFileName(stream.Name);
+                    
+                var response = new HttpResponseMessage
                 {
-                    var response = new HttpResponseMessage
+                    Content = new ByteArrayContent(binaryReader.ReadBytes((int)byteLength))
                     {
-                        Content = new ByteArrayContent(stream.ToArray())
+                        Headers =
                         {
-                            Headers =
+                            ContentDisposition = new ContentDispositionHeaderValue("attachment")
                             {
-                                ContentDisposition = new ContentDispositionHeaderValue("attachment")
-                                {
-                                    FileName = filename
-                                },
-                                ContentType = new MediaTypeHeaderValue("application/x-zip-compressed")
-                            }
+                                FileName = filename
+                            },
+                            ContentType = new MediaTypeHeaderValue("application/x-zip-compressed")
                         }
-                    };
+                    }
+                };
 
-                    response.Headers.Add("x-filename", filename);
-                    return response;
-                }
+                response.Headers.Add("x-filename", filename);
+                return response;
             }
-
-            return new HttpResponseMessage(System.Net.HttpStatusCode.NotFound);
         }
     }
-
-
-
 }
