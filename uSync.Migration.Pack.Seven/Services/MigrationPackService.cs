@@ -5,11 +5,11 @@ using System.Linq;
 
 using Jumoo.uSync.BackOffice;
 
-using Umbraco.Core.Configuration.Grid;
-using Umbraco.Core.Configuration;
-using Umbraco.Core;
-using Umbraco.Core.IO;
 using Newtonsoft.Json;
+
+using Umbraco.Core;
+using Umbraco.Core.Configuration;
+using Umbraco.Core.IO;
 
 namespace uSync.Migration.Pack.Seven.Services
 {
@@ -25,46 +25,17 @@ namespace uSync.Migration.Pack.Seven.Services
             _root = IOHelper.MapPath("~/uSync/MigrationPacks");
         }
 
-        public MemoryStream PackExport()
+        public Guid CreateExport()
         {
-            var id = Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
+            var id = Guid.NewGuid();
+            var folder = Path.Combine(GetExportFolder(id), uSyncFolder);
+            CreateExport(folder);
+            return id;
+        }
+
+        public void GetConfig(Guid id)
+        {
             var folder = GetExportFolder(id);
-
-            // grab the things we want to include in the pack 
-
-            // a full uSync export
-            CreateExport(Path.Combine(folder, uSyncFolder));
-
-            // the grid.config for the site
-            GetGridConfig(folder);
-
-            // views
-            CopyViews(folder);
-
-            // css and scripts
-            CopyCss(folder);
-            CopyScripts(folder);
-
-            // make the stream
-            var stream = ZipFolder(folder);
-
-            // clean the folder we used
-            CleanFolder(folder);
-
-            return stream;
-          
-        }
-
-        /// <summary>
-        /// Get uSync to do a full export. 
-        /// </summary>
-        private void CreateExport(string folder)
-        {
-            _ = uSyncBackOfficeContext.Instance.ExportAll(folder);
-        }
-
-        private void GetGridConfig(string folder)
-        {
             var appPlugins = "..\\App_Plugins";
             var configFolder = "..\\Config";
             var debugging = false;
@@ -81,17 +52,40 @@ namespace uSync.Migration.Pack.Seven.Services
 
             var configFile = Path.Combine(folder, siteFolder, "config", "grid.editors.config.js");
 
-            Directory.CreateDirectory(Path.GetDirectoryName(configFile));   
-              
+            Directory.CreateDirectory(Path.GetDirectoryName(configFile));
+
             File.WriteAllText(configFile, configJson);
         }
 
-        private void CopyViews(string folder)
+        public void CopyViews(Guid id)
         {
+            var folder = GetExportFolder(id);
             var viewsRoot = IOHelper.MapPath("~/views");
             var viewsTarget = Path.Combine(folder, siteFolder, "views");
-
             CopyFolder(viewsRoot, viewsTarget);
+        }
+
+        public void CopyFiles(Guid id)
+        {
+            var folder = GetExportFolder(id);
+            CopyCss(folder);
+            CopyScripts(folder);
+        }
+
+        public MemoryStream ZipExport(Guid id)
+        {
+            var folder = GetExportFolder(id);
+            var stream = ZipFolder(folder);
+            CleanFolder(folder);
+            return stream;
+        }
+
+        /// <summary>
+        /// Get uSync to do a full export. 
+        /// </summary>
+        private void CreateExport(string folder)
+        {
+            _ = uSyncBackOfficeContext.Instance.ExportAll(folder);
         }
 
         private void CopyCss(string folder) {
@@ -156,7 +150,7 @@ namespace uSync.Migration.Pack.Seven.Services
             }
         }
 
-        private string GetExportFolder(string id)
-            => Path.Combine(_root, id);
+        private string GetExportFolder(Guid id)
+            => Path.Combine(_root, id.ToString());
     }
 }

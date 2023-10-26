@@ -6,11 +6,31 @@
         var serviceRoot = 'backoffice/uSync/uSyncPackerApi/';
 
         return {
-            makePack : makePack
+            createExport: createExport,
+            getConfig: getConfig,
+            copyViews: copyViews,
+            copyFiles: copyFiles,
+            zipExport: zipExport
         };
 
-        function makePack() {
-            return downloadPost(serviceRoot + 'MakePack');
+        function createExport() {
+            return $http.get(serviceRoot + 'CreateExport')
+        }
+
+        function getConfig(id) {
+            return $http.get(serviceRoot + 'GetConfig?id=', id);
+        }
+
+        function copyViews(id) {
+            return $http.get(serviceRoot + 'CopyViews?id=', id);
+        }
+
+        function copyFiles(id) {
+            return $http.get(serviceRoot + 'CopyFiles?id=', id);
+        }
+
+        function zipExport(id) {
+            return downloadPost(serviceRoot + 'ZipFolder?id=', id);
         }
 
         /*

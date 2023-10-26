@@ -19,6 +19,10 @@
         </umb-box-content>
         <umb-box-content>
 
+            <div ng-if="vm.state == 'busy'">
+                {{vm.stage}}
+            </div>
+
             <umb-button type="button"
                         icon="icon-box"
                         button-style="success"

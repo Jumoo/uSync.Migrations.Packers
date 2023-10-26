@@ -14,20 +14,40 @@ namespace uSync.Migration.Pack.Seven.Controllers
     [PluginController("uSync")]
     public class uSyncPackerApiController : UmbracoAuthorizedApiController
     {
+        MigrationPackService _packService;
+
+        public uSyncPackerApiController()
+        { 
+            _packService = new MigrationPackService();
+        }
+
         /// <summary>
         ///  finder method (so we can programatically find the route)
         /// </summary>
         public bool GetApi() => true;
 
+        [HttpGet]
+        public Guid CreateExport() => _packService.CreateExport();
+
+        [HttpGet]
+        public void GetConfig(Guid id) => _packService.GetConfig(id);
+
+        [HttpGet]
+        public void CopyViews(Guid id) => _packService.CopyViews(id);
+
+        [HttpGet]
+        public void CopyFiles(Guid id) => _packService.CopyFiles(id);
+
+
         [HttpPost]
-        public HttpResponseMessage MakePack()
+        public HttpResponseMessage ZipFolder(Guid id)
         {
 
             var filename = string.Format("migration_data_{0}.zip", DateTime.Now.ToString("yyyy_MM_dd_HHmmss"));
             // var filename = Path.GetFileNameWithoutExtension(Path.GetRandomFileName()) + ".zip";
 
             var migrationPackService = new MigrationPackService();
-            using (var stream = migrationPackService.PackExport())
+            using (var stream = migrationPackService.ZipExport(id))
             {
                 if (stream != null)
                 {
