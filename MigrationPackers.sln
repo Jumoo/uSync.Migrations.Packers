@@ -5,18 +5,19 @@ VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "uSync.Migration.Packers.Shared", "uSync.Migration.Packers.Shared\uSync.Migration.Packers.Shared.csproj", "{EBAC83A5-1F82-4FE2-9CC4-D6BD208378E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uSync.Migration.Packer.v8", "uSync.Migration.Packer.v8\uSync.Migration.Packer.v8.csproj", "{883277F6-4BBE-4A55-A2D8-69E695D29A2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "uSync.Migration.Packer.v8", "uSync.Migration.Packer.v8\uSync.Migration.Packer.v8.csproj", "{883277F6-4BBE-4A55-A2D8-69E695D29A2A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{996FEB11-0E50-4E01-9300-E7C7073128A7}"
 	ProjectSection(SolutionItems) = preProject
 		gulpfile.js = gulpfile.js
+		readme.md = readme.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Websites", "Websites", "{AF493B52-AB70-44E1-B2F2-45DA3911D214}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigrationPackers.V8.Site", "MigrationPackers.V8.Site\MigrationPackers.V8.Site.csproj", "{D73A0E4F-88AB-42B8-ADA7-02BD54CB0FA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uSync.Migration.Packer.v7", "uSync.Migration.Packer.v7\uSync.Migration.Packer.v7.csproj", "{97477903-43BD-4101-807E-B9F42AF6DC39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "uSync.Migration.Packer.v7", "uSync.Migration.Packer.v7\uSync.Migration.Packer.v7.csproj", "{97477903-43BD-4101-807E-B9F42AF6DC39}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigrationPackers.V7.Site", "MigrationPackers.V7.Site\MigrationPackers.V7.Site.csproj", "{E1A0EFA3-8717-4545-97B1-FF36B2D42B1D}"
 EndProject
