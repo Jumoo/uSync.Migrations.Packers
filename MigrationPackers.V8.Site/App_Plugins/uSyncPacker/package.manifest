@@ -1,0 +1,6 @@
+{
+  "javascript": [
+    "~/App_Plugins/uSyncPacker/migration.service.js",
+    "~/App_Plugins/uSyncPacker/dashboard.controller.js"
+  ]
+}

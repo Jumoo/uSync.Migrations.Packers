@@ -1,0 +1,58 @@
+<div ng-controller="migrationPackDashboardController as vm">
+
+    <div ng-if="!vm.loading">
+        <div ng-if="!vm.hasContentEdition"
+             class="alert alert-warning">
+            <strong>You don't have uSync.ContentEdition installed</strong>
+            <p>
+                Without content edition the migration pack won't contain
+                any content or media.
+            </p>
+        </div>
+
+        <umb-box>
+            <umb-box-header title="uSync.Migration.Packer"
+                            description="Create a migration pack">
+            </umb-box-header>
+            <umb-box-content>
+
+                <p>
+                    A migration pack, helps uSync.Migrations get all the 
+                    data it needs about your site.
+                </p>
+                <p>
+                    A pack contains:
+                    <ul>
+                        <li>uSync Files</li>
+                        <li>Grid config</li>
+                        <li>view files</li>
+                        <li>script and css files</li>
+                        <li>other things...</li>
+                    </ul>
+                </p>
+            </umb-box-content>
+            <umb-box-content>
+                <div class="flex justify-center">
+                    <umb-button type="button"
+                                action="vm.makePack()"
+                                icon="icon-zip"
+                                label="make pack"
+                                size="xl"
+                                button-style="success"
+                                state="vm.state"
+                                disabled="vm.working"></umb-button>
+                </div>
+                <div class="flex justify-center">
+                    <div ng-if="vm.working" class="mt2">
+                        {{vm.current}}
+                    </div>
+                </div>
+            </umb-box-content>
+
+        </umb-box>
+
+
+    </div>
+
+
+</div>

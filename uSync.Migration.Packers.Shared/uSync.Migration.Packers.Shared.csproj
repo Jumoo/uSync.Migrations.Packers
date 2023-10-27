@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net452;net472</TargetFrameworks>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>uSync.Migration.Packers.Shared</PackageId>
+		<Title>uSync Migration Packers Shared library</Title>
+		<Authors>Kevin Jump</Authors>
+		<Company>Jumoo</Company>
+
+		<Description><![CDATA[Shared library for Umbraco 7/8 Migration packers]]></Description>
+
+		<PackageProjectUrl>https://github.com/Jumoo/uSync.Migrations.Packers</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/Jumoo/uSync.Migrations.Packers</RepositoryUrl>
+
+		<PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
+
+	</PropertyGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
+		<PackageReference Include="UmbracoCms.Core" Version="7.15.11" />
+		<PackageReference Include="uSync" Version="4.0.16" />
+		<PackageReference Include="uSync.Core" Version="6.0.15" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net472' ">
+		<PackageReference Include="UmbracoCms.Web" Version="8.18.8" />
+		<PackageReference Include="uSync.BackOffice.Core" Version="8.11.6" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="System.IO.Compression" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="App_Plugins\uSyncPacker\**\*.*">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
+		</Content>
+	</ItemGroup>
+
+</Project>
