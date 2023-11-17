@@ -68,6 +68,12 @@ namespace uSync.Migration.Packers.Shared
 
             CreateExport(folder);
 
+            // we don't hash the top level folders.
+            foreach (var subFolder in Directory.GetDirectories(folder))
+            {
+                HashFolders(subFolder);
+            }
+
             return id;
         }
 
@@ -79,6 +85,24 @@ namespace uSync.Migration.Packers.Shared
             var options = new SyncHandlerOptions("default", HandlerActions.Export);
             _ = _uSyncService.Export(folder, options, null);
 #endif
+        }
+
+        private void HashFolders(string folder)
+        {
+            foreach (var file in Directory.GetFiles(folder, "*.config").ToList())
+            {
+                var newname = Path.Combine(Path.GetDirectoryName(file), $"{file.GenerateHash()}.config");
+                File.Move(file, newname);
+            }
+
+            foreach (var directory in Directory.GetDirectories(folder).ToList().Select((path, index) => (path, index)))
+            {
+                HashFolders(directory.path);
+
+                var newName = Path.Combine(Path.GetDirectoryName(directory.path), $"{directory.index:0000}");
+                Directory.Move(directory.path, newName);
+            }
+
         }
 
         public Guid GetConfig(Guid id)
@@ -166,7 +190,7 @@ namespace uSync.Migration.Packers.Shared
 
             var stream = new MemoryStream();
 
-            using (var archive = new ZipArchive(stream, ZipArchiveMode.Create, true))
+            using (var archive = new ZipArchive(stream, ZipArchiveMode.Create, true, System.Text.Encoding.UTF8))
             {
                 foreach (var file in files)
                 {
